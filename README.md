@@ -1,3 +1,16 @@
-# SE357-Pratice-class
-SE357.O11.PMCL
-1. Lê Ngọc Minh-20521600
+Extension Ví điện tử lưu trữ tài sản cryptocurrency
+
+Contributors:
+
+Leader: Lê Ngọc Minh - 20521600 - Github
+
+Thầy. Vũ Tuấn Hải - Github
+Description:
+
+How to use:
+
+Additional information:
+
+Code of conducting:
+
+License:
