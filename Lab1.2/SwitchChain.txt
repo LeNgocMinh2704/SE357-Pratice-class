@@ -1,0 +1,39 @@
+@startuml
+participant User
+participant MyWalletExtension
+participant EthereumNetwork
+participant OtherBlockchain
+
+User -> MyWalletExtension: Opens MyWalletExtension
+activate MyWalletExtension
+
+User -> MyWalletExtension: Logs in
+MyWalletExtension -> MyWalletExtension: Authenticates user
+activate MyWalletExtension
+alt User authenticated
+    MyWalletExtension --> User: User authenticated successfully
+else Authentication failed
+    MyWalletExtension --> User: Authentication failed
+    deactivate MyWalletExtension
+    @enduml
+end
+
+User -> MyWalletExtension: Navigates to switch chain
+MyWalletExtension -> MyWalletExtension: Loads chain switch interface
+MyWalletExtension --> User: Chain switch interface loaded
+
+User -> MyWalletExtension: Selects a different blockchain
+alt Ethereum network selected
+    MyWalletExtension -> EthereumNetwork: Switches to Ethereum network
+    activate EthereumNetwork
+    EthereumNetwork --> MyWalletExtension: Switched to Ethereum network
+    deactivate EthereumNetwork
+else Other blockchain selected
+    MyWalletExtension -> OtherBlockchain: Switches to OtherBlockchain
+    activate OtherBlockchain
+    OtherBlockchain --> MyWalletExtension: Switched to OtherBlockchain
+    deactivate OtherBlockchain
+end
+
+deactivate MyWalletExtension
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+participant User
+participant MyWalletExtension
+participant EthereumNetwork
+
+User -> MyWalletExtension: Opens MyWalletExtension
+activate MyWalletExtension
+
+User -> MyWalletExtension: Logs in
+MyWalletExtension -> MyWalletExtension: Authenticates user
+activate MyWalletExtension
+alt User authenticated
+    MyWalletExtension --> User: User authenticated successfully
+else Authentication failed
+    MyWalletExtension --> User: Authentication failed
+    deactivate MyWalletExtension
+    
+end
+
+User -> MyWalletExtension: Navigates to transaction feature
+MyWalletExtension -> MyWalletExtension: Loads transaction interface
+MyWalletExtension --> User: Transaction interface loaded
+
+User -> MyWalletExtension: Initiates swap/buy/sell transaction
+MyWalletExtension -> MyWalletExtension: Validates transaction details
+activate MyWalletExtension
+alt Transaction details validated
+    MyWalletExtension -> EthereumNetwork: Checks wallet balance
+    activate EthereumNetwork
+    EthereumNetwork --> MyWalletExtension: Wallet balance retrieved
+    MyWalletExtension -> EthereumNetwork: Initiates swap/buy/sell request
+    EthereumNetwork --> MyWalletExtension: Transaction successful
+    MyWalletExtension --> User: Transaction completed
+else Transaction details not validated
+    MyWalletExtension --> User: Error message
+    deactivate MyWalletExtension
+    
+end
+
+deactivate MyWalletExtension
+@enduml

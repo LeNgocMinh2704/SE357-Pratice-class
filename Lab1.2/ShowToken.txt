@@ -1,0 +1,32 @@
+@startuml
+participant User
+participant MyWalletExtension
+participant EthereumNetwork
+
+User -> MyWalletExtension: Opens MyWalletExtension
+activate MyWalletExtension
+
+User -> MyWalletExtension: Logs in
+MyWalletExtension -> MyWalletExtension: Authenticates user
+activate MyWalletExtension
+alt User authenticated
+    MyWalletExtension --> User: User authenticated successfully
+else Authentication failed
+    MyWalletExtension --> User: Authentication failed
+    deactivate MyWalletExtension
+    @enduml
+end
+
+User -> MyWalletExtension: Navigates to view tokens/coins
+MyWalletExtension -> MyWalletExtension: Loads token/coin list
+MyWalletExtension --> User: Token/Coin list loaded
+
+User -> MyWalletExtension: Requests token/coin details
+MyWalletExtension -> EthereumNetwork: Retrieves token/coin details
+activate EthereumNetwork
+EthereumNetwork --> MyWalletExtension: Token/coin details received
+deactivate EthereumNetwork
+MyWalletExtension --> User: Displays token/coin details
+
+deactivate MyWalletExtension
+@enduml

@@ -1,0 +1,55 @@
+@startuml
+participant User
+participant MyWalletExtension
+participant EthereumNetwork
+participant ExternalService
+
+User -> MyWalletExtension: Opens MyWalletExtension
+activate MyWalletExtension
+
+User -> MyWalletExtension: Logs in
+MyWalletExtension -> MyWalletExtension: Authenticates user
+activate MyWalletExtension
+alt User authenticated
+    MyWalletExtension --> User: User authenticated successfully
+else Authentication failed
+    MyWalletExtension --> User: Authentication failed
+    deactivate MyWalletExtension
+    @enduml
+end
+
+User -> MyWalletExtension: Chooses chain (Non-EVM/EVM)
+MyWalletExtension -> MyWalletExtension: Selects chain type
+MyWalletExtension --> User: Chain type selected
+
+User -> MyWalletExtension: Enters account name
+MyWalletExtension -> MyWalletExtension: Validates account name
+MyWalletExtension --> User: Account name validated
+
+User -> MyWalletExtension: Enters private key (12 seed phrases)
+MyWalletExtension -> MyWalletExtension: Validates private key
+alt Valid private key
+    MyWalletExtension --> User: Private key validated successfully
+else Invalid private key
+    MyWalletExtension --> User: Error: Invalid private key
+    deactivate MyWalletExtension
+    @enduml
+end
+
+User -> MyWalletExtension: Confirms import
+MyWalletExtension -> EthereumNetwork: Imports wallet
+activate EthereumNetwork
+alt Wallet import successful
+    EthereumNetwork --> MyWalletExtension: Wallet imported successfully
+    deactivate EthereumNetwork
+    MyWalletExtension --> User: Wallet imported successfully
+else Wallet import failed
+    EthereumNetwork --> MyWalletExtension: Wallet import failed
+    deactivate EthereumNetwork
+    MyWalletExtension --> User: Error: Wallet import failed
+    deactivate MyWalletExtension
+    @enduml
+end
+
+deactivate MyWalletExtension
+@enduml

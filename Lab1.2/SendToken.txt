@@ -1,0 +1,77 @@
+@startuml
+participant User
+participant MyWalletExtension
+participant EthereumNetwork
+participant ExternalService
+
+User -> MyWalletExtension: Opens MyWalletExtension
+activate MyWalletExtension
+
+User -> MyWalletExtension: Logs in
+MyWalletExtension -> MyWalletExtension: Authenticates user
+activate MyWalletExtension
+alt User authenticated
+    MyWalletExtension --> User: User authenticated successfully
+else Authentication failed
+    MyWalletExtension --> User: Authentication failed
+    deactivate MyWalletExtension
+    
+end
+
+User -> MyWalletExtension: Selects wallet account (sender)
+MyWalletExtension -> MyWalletExtension: Loads wallet accounts
+MyWalletExtension --> User: Wallet accounts loaded
+User -> MyWalletExtension: Chooses sender account (default: main account)
+
+User -> MyWalletExtension: Enters receiver wallet address or scans QR code
+MyWalletExtension -> MyWalletExtension: Validates input
+MyWalletExtension --> User: Input validated
+
+User -> MyWalletExtension: Clicks confirm to proceed to Send Screen
+MyWalletExtension -> MyWalletExtension: Loads Send Screen
+MyWalletExtension --> User: Send Screen loaded
+
+User -> MyWalletExtension: Chooses token to send
+MyWalletExtension -> MyWalletExtension: Retrieves token list
+MyWalletExtension --> User: Token list displayed
+User -> MyWalletExtension: Selects token to send
+
+User -> MyWalletExtension: Enters token amount
+MyWalletExtension -> MyWalletExtension: Validates token amount
+alt Sufficient amount
+    MyWalletExtension --> User: Token amount validated
+else Insufficient amount
+    MyWalletExtension --> User: Error: Insufficient balance
+    deactivate MyWalletExtension
+    
+end
+
+User -> MyWalletExtension: Calculates gas fee
+MyWalletExtension -> EthereumNetwork: Gas fee calculation
+activate EthereumNetwork
+EthereumNetwork --> MyWalletExtension: Gas fee calculated
+deactivate EthereumNetwork
+MyWalletExtension --> User: Gas fee calculated
+
+User -> MyWalletExtension: Clicks Send to confirm
+MyWalletExtension -> EthereumNetwork: Sends transaction
+activate EthereumNetwork
+alt Transaction successful
+    EthereumNetwork --> MyWalletExtension: Transaction successful
+    deactivate EthereumNetwork
+    MyWalletExtension --> User: Transaction completed
+else Transaction failed
+    EthereumNetwork --> MyWalletExtension: Transaction failed
+    deactivate EthereumNetwork
+    MyWalletExtension --> User: Error: Transaction failed
+    deactivate MyWalletExtension
+    
+end
+
+User -> ExternalService: View transaction on Eth explorer
+activate ExternalService
+ExternalService --> User: Transaction details shown on Eth explorer
+deactivate ExternalService
+
+deactivate MyWalletExtension
+@enduml

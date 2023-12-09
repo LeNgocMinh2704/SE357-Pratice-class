@@ -1,0 +1,43 @@
+@startuml
+actor User as U
+participant Extension as W
+participant GoogleOAuth as G
+participant TwitterOAuth as T
+participant AppleAPI as A
+
+U -> W: Clicks "Login with Google"
+activate W
+W -> G: Request Google login
+activate G
+G --> W: Redirect to Google OAuth
+deactivate G
+W --> U: Google OAuth login page
+deactivate W
+
+U -> W: Clicks "Login with Twitter"
+activate W
+W -> T: Request Twitter login
+activate T
+T --> W: Redirect to Twitter OAuth
+deactivate T
+W --> U: Twitter OAuth login page
+deactivate W
+
+U -> W: Clicks "Login with Apple"
+activate W
+W -> A: Request Apple login
+activate A
+A --> W: Redirect to Apple API
+deactivate A
+W --> U: Apple API login page
+deactivate W
+
+U -> W: Enters email and password
+activate W
+W --> U: Requesting authentication
+deactivate W
+U -> W: Submits email and password
+activate W
+W --> U: Authentication success / failure
+deactivate W
+@enduml

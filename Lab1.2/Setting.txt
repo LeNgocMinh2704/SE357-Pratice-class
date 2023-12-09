@@ -1,0 +1,25 @@
+@startuml
+participant User
+participant MyWalletExtension
+participant SecureStorage
+
+User -> MyWalletExtension: Opens MyWalletExtension
+activate MyWalletExtension
+
+User -> MyWalletExtension: Navigates to Settings
+MyWalletExtension -> MyWalletExtension: Loads Settings interface
+MyWalletExtension --> User: Settings interface loaded
+
+User -> MyWalletExtension: Selects "Show Private Key"
+MyWalletExtension -> SecureStorage: Retrieve private key
+activate SecureStorage
+SecureStorage --> MyWalletExtension: Private key retrieved
+deactivate SecureStorage
+MyWalletExtension --> User: Displays private key
+
+User -> MyWalletExtension: Selects "Logout"
+MyWalletExtension -> MyWalletExtension: Clears session data
+MyWalletExtension --> User: Logout successful
+
+deactivate MyWalletExtension
+@enduml

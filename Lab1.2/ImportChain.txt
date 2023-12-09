@@ -1,0 +1,51 @@
+@startuml
+participant User
+participant MyWalletExtension
+participant EthereumNetwork
+
+User -> MyWalletExtension: Opens MyWalletExtension
+activate MyWalletExtension
+
+User -> MyWalletExtension: Logs in
+MyWalletExtension -> MyWalletExtension: Authenticates user
+activate MyWalletExtension
+
+alt User authenticated
+    MyWalletExtension --> User: User authenticated successfully
+else Authentication failed
+    MyWalletExtension --> User: Authentication failed
+    deactivate MyWalletExtension
+    @enduml
+end
+
+User -> MyWalletExtension: Navigates to add new network
+MyWalletExtension -> MyWalletExtension: Loads add new network interface
+MyWalletExtension --> User: Add new network interface loaded
+
+User -> MyWalletExtension: Enters new network details (name, RPC URL, chain ID)
+MyWalletExtension -> MyWalletExtension: Validates network details
+alt Valid network details
+    MyWalletExtension --> User: Network details validated successfully
+else Invalid network details
+    MyWalletExtension --> User: Error: Invalid network details
+    deactivate MyWalletExtension
+    @enduml
+end
+
+User -> MyWalletExtension: Confirms adding new network
+MyWalletExtension -> EthereumNetwork: Adds new network
+activate EthereumNetwork
+alt Network addition successful
+    EthereumNetwork --> MyWalletExtension: New network added successfully
+    deactivate EthereumNetwork
+    MyWalletExtension --> User: New network added successfully
+else Network addition failed
+    EthereumNetwork --> MyWalletExtension: Error: Network addition failed
+    deactivate EthereumNetwork
+    MyWalletExtension --> User: Error: Network addition failed
+    deactivate MyWalletExtension
+    @enduml
+end
+
+deactivate MyWalletExtension
+@enduml

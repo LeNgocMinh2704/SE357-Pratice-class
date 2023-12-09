@@ -1,0 +1,43 @@
+@startuml
+participant User
+participant MyWalletExtension
+participant EthereumNetwork
+
+User -> MyWalletExtension: Opens MyWalletExtension
+activate MyWalletExtension
+
+User -> MyWalletExtension: Logs in
+MyWalletExtension -> MyWalletExtension: Authenticates user
+activate MyWalletExtension
+alt User authenticated
+    MyWalletExtension --> User: User authenticated successfully
+else Authentication failed
+    MyWalletExtension --> User: Authentication failed
+    deactivate MyWalletExtension
+    
+end
+
+User -> MyWalletExtension: Selects wallet account
+MyWalletExtension -> MyWalletExtension: Loads wallet accounts
+MyWalletExtension --> User: Wallet accounts loaded
+
+User -> MyWalletExtension: Navigates to swap token
+MyWalletExtension -> MyWalletExtension: Loads swap token interface
+MyWalletExtension --> User: Swap token interface loaded
+
+User -> MyWalletExtension: Selects tokens to swap
+MyWalletExtension -> MyWalletExtension: Retrieves token list
+MyWalletExtension --> User: Token list displayed
+User -> MyWalletExtension: Chooses tokens and set slippage
+MyWalletExtension -> MyWalletExtension: Validates input
+MyWalletExtension --> User: Input validated
+
+User -> MyWalletExtension: Initiates token swap request
+MyWalletExtension -> EthereumNetwork: Calculates gas fee and swaps tokens with slippage
+activate EthereumNetwork
+EthereumNetwork --> MyWalletExtension: Token swap successful with gas fee and slippage
+deactivate EthereumNetwork
+MyWalletExtension --> User: Token swap completed
+
+deactivate MyWalletExtension
+@enduml

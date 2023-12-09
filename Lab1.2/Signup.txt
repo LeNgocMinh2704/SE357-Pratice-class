@@ -1,0 +1,33 @@
+@startuml
+participant User
+participant MyWalletExtension
+participant EthereumNetwork
+participant Database
+
+User -> MyWalletExtension: Clicks on "Signup"
+activate MyWalletExtension
+
+User -> MyWalletExtension: Inputs email and password
+MyWalletExtension -> MyWalletExtension: Validates input
+activate MyWalletExtension
+alt Input validated
+    MyWalletExtension -> MyWalletExtension: Generates new wallet
+    MyWalletExtension -> EthereumNetwork: Creates new wallet
+    activate EthereumNetwork
+    EthereumNetwork --> MyWalletExtension: Wallet creation successful
+    MyWalletExtension -> Database: Saves user data
+    activate Database
+    Database --> MyWalletExtension: User data saved
+    MyWalletExtension --> User: New wallet created
+
+    User -> MyWalletExtension: Navigates to homepage
+    MyWalletExtension -> MyWalletExtension: Retrieves wallet address
+    MyWalletExtension --> User: Shows wallet address on homepage
+else Input not validated
+    MyWalletExtension --> User: Error message
+    deactivate MyWalletExtension
+    
+end
+
+deactivate MyWalletExtension
+@enduml
