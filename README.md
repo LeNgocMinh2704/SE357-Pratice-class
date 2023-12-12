@@ -1,4 +1,4 @@
-Extension Ví điện tử lưu trữ tài sản cryptocurrency
+Wallet Extension 
 
 Contributors: Lê Ngọc Minh - 20521600
 
