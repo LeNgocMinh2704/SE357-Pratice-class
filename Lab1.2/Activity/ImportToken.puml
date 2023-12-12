@@ -1,0 +1,19 @@
+@startuml ImportToken
+start
+
+:User selects 'Import Token' option;
+if (User provides token details?) then (yes)
+  :Validate token details;
+  if (Token details are valid?) then (yes)
+    :Retrieve token information;
+    :Add token to wallet;
+    :Display success message;
+  else (no)
+    :Display error message;
+  endif
+else (no)
+  :Display prompt for token details;
+endif
+
+stop
+@enduml

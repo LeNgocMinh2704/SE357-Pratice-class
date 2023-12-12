@@ -1,0 +1,14 @@
+@startuml
+title WalletExtension Transaction Activity Diagram
+
+start
+:User initiates transaction;
+:WalletExtension prompts for confirmation;
+if (User confirms) then (yes)
+  :Execute transaction;
+  :Update wallet balance;
+else (no)
+  :Cancel transaction;
+endif
+stop
+@enduml

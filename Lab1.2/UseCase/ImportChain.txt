@@ -1,0 +1,17 @@
+@startuml
+left to right direction
+
+actor User as "User"
+
+rectangle "MyWalletExtension" {
+    usecase "Logs in" as UC1
+    usecase "Navigates to add new network" as UC2
+    usecase "Enters new network details" as UC3
+    usecase "Confirms adding new network" as UC4
+    UC1 --> UC2: "Accesses"
+    UC2 --> UC3: "Initiates"
+    UC3 --> UC4: "Proceeds"
+}
+
+User --> UC1: "Uses"
+@enduml
