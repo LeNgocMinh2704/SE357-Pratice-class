@@ -6,6 +6,7 @@ class Database {
 - refreshToken: String
   - email: String
   - password: String
+  - privateKey: String (Encrypted)
   - evmNetworkConnection: EVMNetwork
   - nonEvmNetworkConnection: NonEVMNetwork
 }

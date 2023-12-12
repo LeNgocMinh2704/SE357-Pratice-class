@@ -12,7 +12,7 @@ MyWalletExtension -> MyWalletExtension: Validates input
 activate MyWalletExtension
 alt Input validated
     MyWalletExtension -> MyWalletExtension: Generates new wallet
-    MyWalletExtension -> EthereumNetwork: Creates new wallet
+    MyWalletExtension -> EthereumNetwork: Creates new wallet and Private Key
     activate EthereumNetwork
     EthereumNetwork --> MyWalletExtension: Wallet creation successful
     MyWalletExtension -> Database: Saves user data
